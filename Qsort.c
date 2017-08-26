@@ -13,6 +13,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // 제품의 정보를 담는 구조체를 정의한다.
 typedef struct  {
@@ -24,6 +25,7 @@ typedef struct  {
 void print_struct_array( product *array, int len);
 int struct_cmp_by_price(const void *a, const void *b);
 int struct_cmp_by_quantity(const void *a, const void *b);
+int struct_cmp_by_name(const void *a, const void *b);
 
 int main(void) {
 
@@ -46,16 +48,25 @@ int main(void) {
 
 	//TODO: qsort 함수에 구조체 배열의 주소와 크기 그리고 비교에
 	//사용할 함수의 주소를 인자로 넘겨서 정렬한다.
+	qsort(p, structs_len, sizeof(product), (void *) struct_cmp_by_price);
 
 	//가격을 기준으로 정렬한 후 구조체 배열의 내용을 출력한다.
 	puts("가격 SORT 결과");
 	print_struct_array(p, structs_len);
 
 	//TODO: 수량을 기준으로 한번 더 정렬한다.
+	qsort(p, structs_len, sizeof(product), (void *) struct_cmp_by_quantity);
 
 	//수량을 기준으로 정렬한 후 구조체 배열의 내용을 출력한다.
 	puts("수량 SORT 결과");
 	print_struct_array(p, structs_len);
+
+	// qsort 
+	qsort(p, structs_len, sizeof(product), (void *) struct_cmp_by_name);
+	
+	puts("name SORT 결과");
+	print_struct_array(p, structs_len);
+	
 }
 
 /*
@@ -84,7 +95,9 @@ void print_struct_array(product *array, int len)
  */
 int struct_cmp_by_price(const void *a, const void *b)
 {
-   //TODO: 함수를 완성한다.
+	const product *p1 = (const product *)a;
+	const product *p2 = (const product *)b;
+	return p1->price - p2->price; 
 }
 
 /*
@@ -98,5 +111,17 @@ int struct_cmp_by_price(const void *a, const void *b)
  */
 int struct_cmp_by_quantity(const void *a, const void *b)
 {
-    //TODO: 함수를 완성한다.
+	const product *p1 = (const product *)a;
+	const product *p2 = (const product *)b;
+
+	return p1->quantity - p2->quantity;
+}
+
+// sort by name
+int struct_cmp_by_name(const void *a, const void *b)
+{
+	const product *p1 = (const product *)a;
+	const product *p2 = (const product *)b;
+
+	return strcmp(p1->name, p2->name);
 }
