@@ -128,3 +128,106 @@ int main()
     return 0;
 }
 
+=================================================================
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct _score {
+    char name[20];
+    int jumsu;
+    char phonenum[50];
+} score;
+
+#if 0
+// 문자열
+int compare_name(const void *a, const void *b) {
+    const score *sc1 = (const score *) a;
+    const score *sc2 = (const score *) b;
+    return strcmp(sc1->name, sc2->name);
+}
+
+// 숫자
+int compare_jumsu(const void *a, const void *b) {
+    const score *sc1 = (const score *) a;
+    const score *sc2 = (const score *) b;
+    return sc1->jumsu - sc2->jumsu;
+}
+
+// 문자열
+int compare_phonenum(const void *a, const void *b) {
+    const score *sc1 = (const score *) a;
+    const score *sc2 = (const score *) b;
+    return strcmp(sc1->phonenum, sc2->phonenum);
+}
+#else
+// 문자열
+int compare_name(const score *sc1, const score *sc2) {
+    return strcmp(sc1->name, sc2->name);
+}
+
+// 숫자
+int compare_jumsu(const score *sc1, const score *sc2) {
+    return sc1->jumsu - sc2->jumsu;
+}
+
+// 문자열
+int compare_phonenum(const score *sc1, const score *sc2) {
+    return strcmp(sc1->phonenum, sc2->phonenum);
+}
+#endif
+
+int main(void) {
+    int i,j;
+    int len;
+
+    score sc[5] = {{"cho-chang-hoon", 20, "010-5710-2000"},
+                    {"hong-kil-dong", 50, "010-2323-5343"},
+                    {"kim-chul-su", 70, "010-5642-3829"},
+                    {"shin-dong-kil", 100, "010-7654-7898"},
+                    {"lee-myoung-dong", 10, "010-7682-1091"}};
+
+
+    len = sizeof(sc) / sizeof(score);
+
+    printf("[원본]\n");
+    for (i=0; i < len; i++) {
+        printf("%s | ", sc[i].name);
+        printf("%d |", sc[i].jumsu);
+        printf("%s\n", sc[i].phonenum);
+    }
+    printf("\n\n");
+
+    printf("[by name]\n");
+    qsort(&sc, len, sizeof(score), compare_name);
+
+    for (i=0; i < len; i++) {
+        printf("%s | ", sc[i].name);
+        printf("%d |", sc[i].jumsu);
+        printf("%s\n", sc[i].phonenum);
+    }
+    printf("\n");
+
+    printf("[by jumsu]\n");
+    qsort(&sc, len, sizeof(score), compare_jumsu);
+
+    for (i=0; i < len; i++) {
+        printf("%s | ", sc[i].name);
+        printf("%d |", sc[i].jumsu);
+        printf("%s\n", sc[i].phonenum);
+    }
+    printf("\n");
+
+    printf("[by phonenum]\n");
+    qsort(&sc, len, sizeof(score), compare_phonenum);
+
+    for (i=0; i < len; i++) {
+        printf("%s | ", sc[i].name);
+        printf("%d |", sc[i].jumsu);
+        printf("%s\n", sc[i].phonenum);
+    }
+
+    return 0;
+}
+
+
