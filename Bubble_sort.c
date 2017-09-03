@@ -60,3 +60,61 @@ int main(void) {
 
 	return EXIT_SUCCESS;
 }
+========================================================================================================
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void BubbleSort_up(char * str)
+{
+    int nLen = strlen(str);
+    int i,j;
+    char cTemp;
+
+    printf("[BUBBLE SORT(low->big)]\n%s\n",str);
+    for (i=0; i<nLen - 1; i++)
+    {
+        for (j=0; j<nLen-i-1; j++)
+        {
+            if (str[j] > str[j+1])
+            {
+                cTemp = str[j];
+                str[j] = str[j+1];
+                str[j+1] = cTemp;
+            }
+        }
+    }
+    printf("%s\n", str);
+}
+
+void BubbleSort_down(char * str)
+{
+    int nLen = strlen(str);
+    int i,j;
+    char cTemp;
+
+    printf("[BUBBLE SORT(big->low)]\n%s\n",str);
+    for (i=0; i<nLen - 1; i++)
+    {
+        for (j=0; j<nLen-1-i; j++)
+        {
+            if (str[j] < str[j+1])
+            {
+                cTemp = str[j];
+                str[j] = str[j+1];
+                str[j+1] = cTemp;
+            }
+        }
+    }
+    printf("%s\n", str);
+}
+
+void main(void)
+{
+    char bubble_buf[] = "2431";
+
+    // down -> up
+    BubbleSort_up(bubble_buf);
+    // up -> down
+    BubbleSort_down(bubble_buf);
+}
