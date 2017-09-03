@@ -69,3 +69,74 @@ int main(void)
 
 	return EXIT_SUCCESS;
 }
+
+======================================================================================
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void selectionSort_up( int *list, const int n );
+void selectionSort_down( int *list, const int n );
+
+void selectionSort_up(int *list, int n) {
+    int i, j, indexMin, temp;
+    int *iPtr = NULL;
+
+    for (i=0; i < n-1; i++) {
+        indexMin = i;
+        for (j=i+1; j < n; j++) {
+            if (list[j] < list[indexMin]) {
+                indexMin = j;
+            }
+        }
+
+        if (indexMin != i) {
+            temp = list[indexMin];
+            list[indexMin] = list[i];
+            list[i] = temp;
+        }
+    }
+}
+
+void selectionSort_down(int *list, int n) {
+    int i, j, indexMax, temp;
+    int *iPtr = NULL;
+
+    for (i=0; i < n-1; i++) {
+        indexMax = i;
+        for (j=i+1; j < n; j++) {
+            if (list[j] > list[indexMax]) {
+                indexMax = j;
+            }
+        }
+
+        if (indexMax != i) {
+            temp = list[indexMax];
+            list[indexMax] = list[i];
+            list[i] = temp;
+        }
+    }
+}
+
+int main(void) {
+    int i,j;
+    int buf[10] = {20, 19, 15, 31, 30, 6, 2, 26, 90, 80};
+    int len;
+
+    len = sizeof(buf) / sizeof(int);
+
+    selectionSort_up(buf, len);
+
+    for (i=0; i < len; i++) {
+        printf("%d ", buf[i]);
+    }
+    printf("\n\n");
+
+    selectionSort_down(buf, len);
+
+    for (i=0; i < len; i++) {
+        printf("%d ", buf[i]);
+    }
+
+    return 0;
+}
